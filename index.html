@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="main.css" />
+</head><body a="auto">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <header>
+  <h1>Olivia Long</h1></header><ul></ul>
+  <p>Junior @ Columbia studying CS + Cognitive Science && <br> Co-Director @ CAIAC // NYC AI Safety Fieldbuilder && <br> Horrendous Café. </p>
+  <h2>Links</h2>
+  <p><a href="mailto:ol2256@columbia.edu">[email] </a><a href="https://www.cualignment.org" target="_blank">[caiac] </a><a href="https://github.com/long-olivia" target="_blank">[github] </a><a href="https://linkedin.com/in/olivia-l-572351246" target="_blank">[linkedin] </a><br><a href="https://long-olivia.github.io/image-repo.html">[image repository] </a><a href="https://long-olivia.github.io/thought-repo.html">[thought repository]</a><br><a href="https://github.com/long-olivia/img-repo/blob/54e6f3f0d064c439d0d504f3aa4442bd543d8141/horrendous%20cafe%CC%81%20menu.pdf">[horrendous café menu]</a></p>
+      </div>
+    </main>
+  </body>
+  <canvas id="myCanvas" width="1920" height="400"></canvas>
+  <script>
+    function line(particle, particle2) {
+      context.beginPath();
+      context.moveTo(particle.x, particle.y);
+      context.lineTo(particle2.x, particle2.y);
+      context.stroke();
+    }
+    function animate() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < maxParticles; i++) {
+        let particle = particles[i];
+        context.fillRect(particle.x - particleSize / 2, particle.y - particleSize / 2, particleSize, particleSize);
+        for (let j = 0; j < maxParticles; j++) {
+          if (i != j) {
+            let particle2 = particles[j];
+            let distanceX = Math.abs(particle.x - particle2.x);
+            let distanceY = Math.abs(particle.y - particle2.y);
+            if (distanceX < threshold && distanceY < threshold) {
+              context.lineWidth = ((threshold * 2) - (distanceX + distanceY)) / 50;
+              let color = 200 - Math.floor(distanceX + distanceY);
+              context.strokeStyle = 'white';
+              line(particle, particle2);
+            }
+          }
+        }
+        particle.x = particle.x + particle.vx;
+        particle.y = particle.y + particle.vy;
+        if (particle.x > canvas.width - particleSize || particle.x < particleSize)
+          particle.vx = -particle.vx;
+        if (particle.y > canvas.height - particleSize || particle.y < particleSize)
+          particle.vy = -particle.vy;
+      }
+      window.requestAnimationFrame(animate);
+    }
+    let canvas = document.getElementById('myCanvas');
+    let context = canvas.getContext('2d');
+    let particles = [];
+    let particleSize = 4;
+    let maxParticles = 120;
+    let threshold = 100;
+    for (let i = 0; i < maxParticles; i++) {
+      let particle = {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: Math.random() * 0.5,
+        vy: Math.random() * 0.5
+      }
+      particles.push(particle);
+    }
+    context.fillStyle = 'white';
+    animate(); 
+  </script>  
+</html>
