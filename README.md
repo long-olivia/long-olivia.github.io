@@ -1,4 +1,4 @@
-Just my tiny corner of the Internet.
+tiny corner of the Internet
 
 Thank you to https://slicker.me/javascript/particles.htm for the particle constellation animation.
 
